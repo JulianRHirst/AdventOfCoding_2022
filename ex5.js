@@ -536,10 +536,8 @@ function parseMoves(initial, instructions)
         }
     )
 
-    return state.map(value => value.substring(0, 1)).join("");
+    return state.map(value => value.substring(value, 0, 1)).join("");
 }
 
-
 console.log(parseMoves(initialSetup, moveStr));
-
-console.log("done!")
+console.log("done!");
