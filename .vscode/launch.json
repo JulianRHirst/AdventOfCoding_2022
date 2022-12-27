@@ -11,7 +11,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\src\\aoc2022_ex24.js"
+            "program": "${workspaceFolder}\\src\\aoc24\\aoc2022_ex24.js"
         }
     ]
 }
