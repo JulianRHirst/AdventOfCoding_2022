@@ -238,5 +238,6 @@ const elfFood = [
     
 ];
 
-const totalCals = elfFood.map( arr => arr.reduce((total, value)=>total+value, 0) );
-console.log(Math.max(...totalCals));
+const totalCals = elfFood.map( arr => arr.reduce((total, value)=>total+value, 0) ).sort((a, b) => b-a);
+console.log(`Part 1 = ${totalCals[0]}`);
+console.log(`Part 2 = ${totalCals.slice(0, 3).reduce((total, value)=> value+total, 0)}`);
