@@ -1,4 +1,4 @@
-const moveStr = [
+const instructionArray = ([
 "move 1 from 2 to 6", 
 "move 3 from 7 to 9", 
 "move 7 from 9 to 4", 
@@ -502,42 +502,24 @@ const moveStr = [
 "move 1 from 5 to 4", 
 "move 5 from 8 to 6", 
 "move 1 from 6 to 9"
-];
+].map(text => text.split(" ")).map(splitArray => { return { quantity: +splitArray[1], from: +splitArray[3]-1, to: +splitArray[5]-1}}));
 
-const initialSetup = [
-"QFLSR",
-"TPGQZN",
-"SMQB",
-"QBCHJZGT",
-"SFNBMHP",
-"GVLSNQCP",
-"FCW",
-"MPVWZGHQ",
-"RNCLDZG"
-];
+const initial = [ 'RSLFQ', 'NZQGPT', 'BQMS', 'TGZJHCBQ', 'PHMBNFS', 'PCQNSLVG', 'WCF', 'QHGZWVPM', 'GZDLCNR'];
 
-function moveN(initial, from, to, n) {
-    // console.log( from, to, n, initial);
+console.log(initial);
 
-    const state = ( n>1 ? moveN(initial, from, to, n-1) : initial);
-    const toMove = state[from].substring(0,1);
+console.log("Part1: ", 
+    instructionArray.reduce((state, move) => { 
+        const newState = [...state];
+        newState[move.to] += (state[move.from].substr(-move.quantity).split('').reverse().join('')); 
+        newState[move.from] = state[move.from].slice(0, state[move.from].length - move.quantity);
+        return newState;
+}, [...initial]).reduce((output, stack) => output += stack.substr(-1), "")); // FZCMJCRHZ expected
 
-    return state.map((stack, index )=> index===from ? stack.substring(1) : index===to ? toMove + stack : stack) ;
-}
-
-function parseMoves(initial, instructions)
-{
-    let state = initial;
-
-    moveStr.forEach(
-        (value) => {
-            const splitString = value.split(" ");
-            state = moveN(state, Number(splitString[3])-1, Number(splitString[5])-1, Number(splitString[1]));
-        }
-    )
-
-    return state.map(value => value.substring(value, 0, 1)).join("");
-}
-
-console.log(parseMoves(initialSetup, moveStr));
+console.log("Part2: ", 
+    instructionArray.reduce((state, move) => { 
+        state[move.to] += (state[move.from].substr(-move.quantity)); 
+        state[move.from] = state[move.from].slice(0, state[move.from].length - move.quantity);
+        return state;
+    }, [...initial]).reduce((output, stack) => output += stack.substr(-1), "")); // JSDHQMZGF expected
 console.log("done!");
